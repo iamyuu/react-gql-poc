@@ -5,15 +5,19 @@ specifiers:
   '@types/react-dom': ^17.0.0
   '@vitejs/plugin-react-refresh': ^1.3.1
   antd: 4.16.3
+  history: 5.0.0
   react: ^17.0.0
   react-dom: ^17.0.0
+  react-router-dom: 6.0.0-beta.0
   typescript: ^4.3.2
   vite: ^2.3.7
 
 dependencies:
   antd: 4.16.3_react-dom@17.0.2+react@17.0.2
+  history: 5.0.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-router-dom: 6.0.0-beta.0_d9087d3b29103f1c99eb8571e6a2a0c4
 
 devDependencies:
   '@types/react': 17.0.11
@@ -550,6 +554,12 @@ packages:
       function-bind: 1.1.1
     dev: true
 
+  /history/5.0.0:
+    resolution: {integrity: sha512-3NyRMKIiFSJmIPdq7FxkNMJkQ7ZEtVblOQ38VtKaA0zZMW1Eo6Q6W8oDKEflr1kNNTItSnk4JMCO1deeSgbLLg==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+    dev: false
+
   /is-core-module/2.4.0:
     resolution: {integrity: sha512-6A2fkfq1rfeQZjxrZJGerpLCTHRNEBiSgnu0+obeJpEPZRUooHgsizvzv0ZjJwOz3iWIHdJtVWJ/tmPr3D21/A==}
     dependencies:
@@ -629,6 +639,14 @@ packages:
       nanoid: 3.1.23
       source-map-js: 0.6.2
     dev: true
+
+  /prop-types/15.7.2:
+    resolution: {integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+    dev: false
 
   /rc-align/4.0.9_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-myAM2R4qoB6LqBul0leaqY8gFaiECDJ3MtQDmzDo9xM9NRT/04TvWOYd2YHU9zvGzqk9QXF6S9/MifzSKDZeMw==}
@@ -1140,6 +1158,31 @@ packages:
     resolution: {integrity: sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /react-router-dom/6.0.0-beta.0_d9087d3b29103f1c99eb8571e6a2a0c4:
+    resolution: {integrity: sha512-36yNNGMT8RB9FRPL9nKJi6HKDkgOakU+o/2hHpSzR6e37gN70MpOU6QQlmif4oAWWBwjyGc3ZNOMFCsFuHUY5w==}
+    peerDependencies:
+      history: '>=5'
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      history: 5.0.0
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-router: 6.0.0-beta.0_history@5.0.0+react@17.0.2
+    dev: false
+
+  /react-router/6.0.0-beta.0_history@5.0.0+react@17.0.2:
+    resolution: {integrity: sha512-VgMdfpVcmFQki/LZuLh8E/MNACekDetz4xqft+a6fBZvvJnVqKbLqebF7hyoawGrV1HcO5tVaUang2Og4W2j1Q==}
+    peerDependencies:
+      history: '>=5'
+      react: '>=16.8'
+    dependencies:
+      history: 5.0.0
+      prop-types: 15.7.2
+      react: 17.0.2
+    dev: false
 
   /react/17.0.2:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
