@@ -21,7 +21,7 @@ export default async function client<TData>(endpoint: string, requestInit?: Requ
     const json = await response.json()
 
     if (response.ok) {
-      return json as TData
+      return json.data as TData
     }
 
     const error = json.errors.length > 0 ? new Error(json.errors[0].message) : json
