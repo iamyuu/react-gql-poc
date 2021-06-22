@@ -1,4 +1,5 @@
 import Fastify, {FastifyReply, FastifyRequest} from 'fastify'
+import cors from 'fastify-cors'
 import mercurius, {IResolvers} from 'mercurius'
 import mercuriusCodegen, {loadSchemaFiles} from 'mercurius-codegen'
 import {buildSchema} from 'graphql'
@@ -81,5 +82,7 @@ mercuriusCodegen(app, {
     enabled: process.env.NODE_ENV === 'development',
   },
 }).catch(console.error)
+
+app.register(cors)
 
 app.listen(8000)
