@@ -1,4 +1,5 @@
 type Query {
-  Hello: String!
-  dogs: [Dog!]!
+  allEmployee: [Employee!]!
+  employee(id: String!): Employee
+  profile: Employee!
 }

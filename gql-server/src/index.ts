@@ -1,9 +1,10 @@
 import Fastify, {FastifyReply, FastifyRequest} from 'fastify'
-import mercurius, {IResolvers, MercuriusLoaders} from 'mercurius'
+import mercurius, {IResolvers} from 'mercurius'
 import mercuriusCodegen, {loadSchemaFiles} from 'mercurius-codegen'
 import {buildSchema} from 'graphql'
+import faker from 'faker'
 
-export const app = Fastify()
+const app = Fastify()
 
 const {schema} = loadSchemaFiles('src/graphql/schema/**/*.gql', {
   watchOptions: {
@@ -22,7 +23,7 @@ const {schema} = loadSchemaFiles('src/graphql/schema/**/*.gql', {
 
 const buildContext = async (req: FastifyRequest, _reply: FastifyReply) => {
   return {
-    authorization: req.headers.authorization,
+    auth: req.headers.authorization,
   }
 }
 
@@ -32,78 +33,36 @@ declare module 'mercurius' {
   interface MercuriusContext extends PromiseType<ReturnType<typeof buildContext>> {}
 }
 
-const dogs = [{name: 'Max'}, {name: 'Charlie'}, {name: 'Buddy'}, {name: 'Max'}]
+let employees = [...Array(25)].map(_ => ({
+  id: faker.datatype.uuid(),
+  name: faker.fake('{{name.firstName}} {{name.lastName}}'),
+  email: faker.internet.exampleEmail(),
+  phone: faker.phone.phoneNumber(),
+  photo: faker.internet.avatar(),
+  address: faker.address.streetAddress(true),
+}))
 
-const owners: Record<string, {name: string}> = {
-  Max: {
-    name: 'Jennifer',
-  },
-  Charlie: {
-    name: 'Sarah',
-  },
-  Buddy: {
-    name: 'Tracy',
-  },
-}
-
-const NOTIFICATION = 'notification'
+const [profile] = employees
 
 const resolvers: IResolvers = {
   Query: {
-    Hello(root, args, ctx, info) {
-      // root ~ {}
-      root
-      // args ~ {}
-      args
-      // ctx.authorization ~ string | undefined
-      ctx.authorization
-      // info ~ GraphQLResolveInfo
-      info
-
-      return 'world'
+    allEmployee() {
+      return employees
     },
-    dogs() {
-      return dogs
+    employee(_, {id}) {
+      return employees.find(employee => employee.id === id)
+    },
+    profile(_) {
+      return profile
     },
   },
   Mutation: {
-    add(root, {x, y}, ctx, info) {
-      // root ~ {}
-      root
-      // x ~ string
-      x
-      // x ~ string
-      y
-      // ctx.authorization ~ string | undefined
-      ctx.authorization
-      // info ~ GraphQLResolveInfo
-      info
+    updateProfile(_, args) {
+      if (args.input) {
+        employees.splice(0, 0, {...args.input, id: profile.id})
+      }
 
-      return x + y
-    },
-    createNotification(_root, {message}, {pubsub}) {
-      pubsub.publish({
-        topic: NOTIFICATION,
-        payload: {
-          newNotification: message,
-        },
-      })
-      return true
-    },
-  },
-  Subscription: {
-    newNotification: {
-      subscribe: (_root, _args, {pubsub}) => {
-        return pubsub.subscribe(NOTIFICATION)
-      },
-    },
-  },
-}
-
-const loaders: MercuriusLoaders = {
-  Dog: {
-    async owner(queries, _ctx) {
-      return queries.map(({obj}) => owners[obj.name])
+      return profile
     },
   },
 }
@@ -111,10 +70,8 @@ const loaders: MercuriusLoaders = {
 app.register(mercurius, {
   schema,
   resolvers,
-  loaders,
   context: buildContext,
-  subscription: true,
-  graphiql: true,
+  graphiql: process.env.NODE_ENV === 'development' ? 'playground' : false,
 })
 
 mercuriusCodegen(app, {

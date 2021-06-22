@@ -1,6 +1,5 @@
 import type { GraphQLResolveInfo } from "graphql";
 import type { MercuriusContext } from "mercurius";
-import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -31,41 +30,42 @@ export type Scalars = {
   _FieldSet: any;
 };
 
-export type Dog = {
-  __typename?: "Dog";
+export type Employee = {
+  __typename?: "Employee";
+  id?: Maybe<Scalars["String"]>;
   name: Scalars["String"];
-  owner?: Maybe<Human>;
+  email: Scalars["String"];
+  phone: Scalars["String"];
+  photo: Scalars["String"];
+  address: Scalars["String"];
 };
 
-export type Human = {
-  __typename?: "Human";
+export type EmployeeInput = {
   name: Scalars["String"];
+  email: Scalars["String"];
+  phone: Scalars["String"];
+  photo: Scalars["String"];
+  address: Scalars["String"];
 };
 
 export type Mutation = {
   __typename?: "Mutation";
-  add: Scalars["Int"];
-  createNotification: Scalars["Boolean"];
+  updateProfile?: Maybe<Employee>;
 };
 
-export type MutationaddArgs = {
-  x: Scalars["Int"];
-  y: Scalars["Int"];
-};
-
-export type MutationcreateNotificationArgs = {
-  message: Scalars["String"];
+export type MutationupdateProfileArgs = {
+  input?: Maybe<EmployeeInput>;
 };
 
 export type Query = {
   __typename?: "Query";
-  Hello: Scalars["String"];
-  dogs: Array<Dog>;
+  allEmployee: Array<Employee>;
+  employee?: Maybe<Employee>;
+  profile: Employee;
 };
 
-export type Subscription = {
-  __typename?: "Subscription";
-  newNotification: Scalars["String"];
+export type QueryemployeeArgs = {
+  id: Scalars["String"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -177,42 +177,34 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Dog: ResolverTypeWrapper<Dog>;
+  Employee: ResolverTypeWrapper<Employee>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  Human: ResolverTypeWrapper<Human>;
+  EmployeeInput: EmployeeInput;
   Mutation: ResolverTypeWrapper<{}>;
-  Int: ResolverTypeWrapper<Scalars["Int"]>;
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Query: ResolverTypeWrapper<{}>;
-  Subscription: ResolverTypeWrapper<{}>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Dog: Dog;
+  Employee: Employee;
   String: Scalars["String"];
-  Human: Human;
+  EmployeeInput: EmployeeInput;
   Mutation: {};
-  Int: Scalars["Int"];
-  Boolean: Scalars["Boolean"];
   Query: {};
-  Subscription: {};
+  Boolean: Scalars["Boolean"];
 };
 
-export type DogResolvers<
+export type EmployeeResolvers<
   ContextType = MercuriusContext,
-  ParentType extends ResolversParentTypes["Dog"] = ResolversParentTypes["Dog"]
+  ParentType extends ResolversParentTypes["Employee"] = ResolversParentTypes["Employee"]
 > = {
+  id?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  owner?: Resolver<Maybe<ResolversTypes["Human"]>, ParentType, ContextType>;
-  isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type HumanResolvers<
-  ContextType = MercuriusContext,
-  ParentType extends ResolversParentTypes["Human"] = ResolversParentTypes["Human"]
-> = {
-  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  phone?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  photo?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  address?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -220,17 +212,11 @@ export type MutationResolvers<
   ContextType = MercuriusContext,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
-  add?: Resolver<
-    ResolversTypes["Int"],
+  updateProfile?: Resolver<
+    Maybe<ResolversTypes["Employee"]>,
     ParentType,
     ContextType,
-    RequireFields<MutationaddArgs, "x" | "y">
-  >;
-  createNotification?: Resolver<
-    ResolversTypes["Boolean"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationcreateNotificationArgs, "message">
+    RequireFields<MutationupdateProfileArgs, never>
   >;
 };
 
@@ -238,28 +224,24 @@ export type QueryResolvers<
   ContextType = MercuriusContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
-  Hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  dogs?: Resolver<Array<ResolversTypes["Dog"]>, ParentType, ContextType>;
-};
-
-export type SubscriptionResolvers<
-  ContextType = MercuriusContext,
-  ParentType extends ResolversParentTypes["Subscription"] = ResolversParentTypes["Subscription"]
-> = {
-  newNotification?: SubscriptionResolver<
-    ResolversTypes["String"],
-    "newNotification",
+  allEmployee?: Resolver<
+    Array<ResolversTypes["Employee"]>,
     ParentType,
     ContextType
   >;
+  employee?: Resolver<
+    Maybe<ResolversTypes["Employee"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryemployeeArgs, "id">
+  >;
+  profile?: Resolver<ResolversTypes["Employee"], ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = MercuriusContext> = {
-  Dog?: DogResolvers<ContextType>;
-  Human?: HumanResolvers<ContextType>;
+  Employee?: EmployeeResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  Subscription?: SubscriptionResolvers<ContextType>;
 };
 
 /**
@@ -290,218 +272,15 @@ export interface Loaders<
     reply: import("fastify").FastifyReply;
   }
 > {
-  Dog?: {
-    name?: LoaderResolver<Scalars["String"], Dog, {}, TContext>;
-    owner?: LoaderResolver<Maybe<Human>, Dog, {}, TContext>;
-  };
-
-  Human?: {
-    name?: LoaderResolver<Scalars["String"], Human, {}, TContext>;
+  Employee?: {
+    id?: LoaderResolver<Maybe<Scalars["String"]>, Employee, {}, TContext>;
+    name?: LoaderResolver<Scalars["String"], Employee, {}, TContext>;
+    email?: LoaderResolver<Scalars["String"], Employee, {}, TContext>;
+    phone?: LoaderResolver<Scalars["String"], Employee, {}, TContext>;
+    photo?: LoaderResolver<Scalars["String"], Employee, {}, TContext>;
+    address?: LoaderResolver<Scalars["String"], Employee, {}, TContext>;
   };
 }
-export type helloQueryVariables = Exact<{ [key: string]: never }>;
-
-export type helloQuery = { __typename?: "Query" } & Pick<Query, "Hello">;
-
-export type addMutationVariables = Exact<{
-  x: Scalars["Int"];
-  y: Scalars["Int"];
-}>;
-
-export type addMutation = { __typename?: "Mutation" } & Pick<Mutation, "add">;
-
-export type dogsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type dogsQuery = { __typename?: "Query" } & {
-  dogs: Array<
-    { __typename?: "Dog" } & Pick<Dog, "name"> & {
-        owner?: Maybe<{ __typename?: "Human" } & Pick<Human, "name">>;
-      }
-  >;
-};
-
-export type createNotificationMutationVariables = Exact<{
-  message: Scalars["String"];
-}>;
-
-export type createNotificationMutation = { __typename?: "Mutation" } & Pick<
-  Mutation,
-  "createNotification"
->;
-
-export type newNotificationSubscriptionVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type newNotificationSubscription = {
-  __typename?: "Subscription";
-} & Pick<Subscription, "newNotification">;
-
-export const helloDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "hello" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [{ kind: "Field", name: { kind: "Name", value: "Hello" } }],
-      },
-    },
-  ],
-} as unknown as DocumentNode<helloQuery, helloQueryVariables>;
-export const addDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "add" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "x" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "y" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "add" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "x" },
-                value: { kind: "Variable", name: { kind: "Name", value: "x" } },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "y" },
-                value: { kind: "Variable", name: { kind: "Name", value: "y" } },
-              },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<addMutation, addMutationVariables>;
-export const dogsDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "dogs" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "dogs" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "name" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "owner" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "name" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<dogsQuery, dogsQueryVariables>;
-export const createNotificationDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "createNotification" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "message" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "createNotification" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "message" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "message" },
-                },
-              },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  createNotificationMutation,
-  createNotificationMutationVariables
->;
-export const newNotificationDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "subscription",
-      name: { kind: "Name", value: "newNotification" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "newNotification" } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  newNotificationSubscription,
-  newNotificationSubscriptionVariables
->;
 declare module "mercurius" {
   interface IResolvers
     extends Resolvers<import("mercurius").MercuriusContext> {}

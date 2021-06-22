@@ -3,8 +3,10 @@ lockfileVersion: 5.3
 specifiers:
   '@graphql-tools/load-files': 6.3.2
   '@graphql-typed-document-node/core': 3.1.0
+  '@types/faker': 5.5.6
   '@types/node': 15.12.4
   cross-env: 7.0.3
+  faker: 5.5.3
   fastify: 3.18.0
   graphql: 15.5.1
   mercurius: 7.9.1
@@ -14,6 +16,7 @@ specifiers:
 
 dependencies:
   '@graphql-tools/load-files': 6.3.2_graphql@15.5.1
+  faker: 5.5.3
   fastify: 3.18.0
   graphql: 15.5.1
   mercurius: 7.9.1
@@ -21,6 +24,7 @@ dependencies:
 
 devDependencies:
   '@graphql-typed-document-node/core': 3.1.0_graphql@15.5.1
+  '@types/faker': 5.5.6
   '@types/node': 15.12.4
   cross-env: 7.0.3
   tsup: 4.11.2_typescript@4.3.4
@@ -781,6 +785,10 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.11.0
 
+  /@types/faker/5.5.6:
+    resolution: {integrity: sha512-UCRj0kLg4sXs2XFVm48OU/wIjyJZkpRkwxhRGVQb5l5GmemkeW22WTz9iiDhYPBUqTzDsIWzhFRuF/4DD5+q2Q==}
+    dev: true
+
   /@types/isomorphic-form-data/2.0.0:
     resolution: {integrity: sha512-A8DxJ9mtMuWuKIQImQkz+hewSFLbvUPtSVl32rHAdL+22Xn0CWPvk2zjuWSFOM8+p/YYoB5MmQThcJshp3no7A==}
     dependencies:
@@ -1371,6 +1379,10 @@ packages:
       signal-exit: 3.0.3
       strip-final-newline: 2.0.0
     dev: true
+
+  /faker/5.5.3:
+    resolution: {integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==}
+    dev: false
 
   /fast-decode-uri-component/1.0.1:
     resolution: {integrity: sha512-WKgKWg5eUxvRZGwW8FvfbaH7AXSh2cL+3j5fMGzUMCxWBJ3dV3a7Wz8y2f/uQ0e3B6WmodD3oS54jTQ9HVTIIg==}

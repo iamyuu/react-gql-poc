@@ -1,0 +1,16 @@
+type Employee {
+  id: String
+  name: String!
+  email: String!
+  phone: String!
+  photo: String!
+  address: String!
+}
+
+input EmployeeInput {
+  name: String!
+  email: String!
+  phone: String!
+  photo: String!
+  address: String!
+}

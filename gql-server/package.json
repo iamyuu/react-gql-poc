@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@graphql-tools/load-files": "6.3.2",
+    "faker": "5.5.3",
     "fastify": "3.18.0",
     "graphql": "15.5.1",
     "mercurius": "7.9.1",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@graphql-typed-document-node/core": "3.1.0",
+    "@types/faker": "5.5.6",
     "@types/node": "15.12.4",
     "cross-env": "7.0.3",
     "tsup": "4.11.2",
