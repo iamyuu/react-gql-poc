@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {QueryClient, QueryClientProvider} from 'react-query'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Layout from './components/layout'
 
@@ -6,6 +7,18 @@ import NotFoundScreen from './screens/not-found'
 import DashboardScreen from './screens/dashboard'
 import ProfileScreen from './screens/profile'
 import EmployeeListScreen from './screens/employee/list'
+
+const queryClient = new QueryClient()
+
+function AppProvider(props: {children: React.ReactNode}) {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Layout>{props.children}</Layout>
+      </Router>
+    </QueryClientProvider>
+  )
+}
 
 function AppRoutes() {
   return (
@@ -20,10 +33,8 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <Router>
-      <Layout>
-        <AppRoutes />
-      </Layout>
-    </Router>
+    <AppProvider>
+      <AppRoutes />
+    </AppProvider>
   )
 }
