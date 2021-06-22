@@ -87,11 +87,11 @@ export const useProfileQuery = <
       TData = ProfileQuery,
       TError = unknown
     >(
-      variables?: ProfileQueryVariables, 
+      variables?: ProfileQueryVariables,
       options?: UseQueryOptions<ProfileQuery, TError, TData>
-    ) => 
+    ) =>
     useQuery<ProfileQuery, TError, TData>(
       ['profile', variables],
-      graphqlRequest<ProfileQuery, ProfileQueryVariables>(ProfileDocument, variables),
+      () => graphqlRequest<ProfileQuery, ProfileQueryVariables>(ProfileDocument, variables),
       options
     );
