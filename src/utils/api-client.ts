@@ -30,7 +30,7 @@ export default async function client<TData>(endpoint: string, requestInit?: Requ
 }
 
 export function graphqlRequest<TData, TVariables>(query: string, variables?: TVariables) {
-  return client<TData>('graphql', {
+  return () => client<TData>('graphql', {
     data: {query, variables},
   })
 }
