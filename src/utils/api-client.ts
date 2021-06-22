@@ -1,4 +1,4 @@
-const apiURL = import.meta.env.API_URL
+const apiURL = import.meta.env.VITE_API_URL
 
 interface RequestInitClient extends RequestInit {
   data?: Record<string, unknown>
