@@ -4,7 +4,7 @@ import {Layout, Menu} from 'antd'
 
 const {Header, Content, Footer, Sider} = Layout
 
-const sidenavs = ['Dashboard', 'Profile']
+const sidenavs = ['Dashboard', 'Edit Profile']
 
 interface PropsChildren {
   children: React.ReactNode
@@ -23,7 +23,7 @@ function AppSidenav() {
       <Menu mode='inline'>
         {sidenavs.map(nav => (
           <Menu.Item key={nav}>
-            <Link to={`/${nav.toLowerCase()}`}>{nav}</Link>
+            <Link to={`/${nav.toLowerCase().replaceAll(' ', '-')}`}>{nav}</Link>
           </Menu.Item>
         ))}
       </Menu>
@@ -45,7 +45,7 @@ function AppMain(props: PropsChildren) {
   return (
     <Content
       style={{
-        margin: '0 1rem',
+        margin: '1rem',
       }}
     >
       {props.children}
