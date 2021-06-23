@@ -1,0 +1,11 @@
+fragment ProfileFragment on Employee {
+  name
+  email
+  photo
+}
+
+query profile {
+  profile {
+    ...ProfileFragment
+  }
+}
