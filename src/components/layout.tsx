@@ -1,10 +1,10 @@
 import * as React from 'react'
-import {Layout, Menu, Breadcrumb} from 'antd'
+import {Link} from 'react-router-dom'
+import {Layout, Menu} from 'antd'
 
 const {Header, Content, Footer, Sider} = Layout
 
-const sidenavs = ['Employee', 'Profile']
-const breadcrumbs = ['Home', 'Employee', 'List']
+const sidenavs = ['Dashboard', 'Profile']
 
 interface PropsChildren {
   children: React.ReactNode
@@ -20,9 +20,11 @@ function AppSidenav() {
           background: 'rgba(0, 0, 0, 0.1)',
         }}
       />
-      <Menu mode='inline' defaultSelectedKeys={[sidenavs[1]]}>
+      <Menu mode='inline'>
         {sidenavs.map(nav => (
-          <Menu.Item key={nav}>{nav}</Menu.Item>
+          <Menu.Item key={nav}>
+            <Link to={`/${nav.toLowerCase()}`}>{nav}</Link>
+          </Menu.Item>
         ))}
       </Menu>
     </Sider>
@@ -46,15 +48,6 @@ function AppMain(props: PropsChildren) {
         margin: '0 1rem',
       }}
     >
-      <Breadcrumb
-        style={{
-          margin: '1rem 0',
-        }}
-      >
-        {breadcrumbs.map(breadcrumb => (
-          <Breadcrumb.Item key={breadcrumb}>{breadcrumb}</Breadcrumb.Item>
-        ))}
-      </Breadcrumb>
       {props.children}
     </Content>
   )
