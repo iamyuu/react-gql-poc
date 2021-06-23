@@ -2,8 +2,6 @@ import * as React from 'react'
 import {Link} from 'react-router-dom'
 import {Layout, Menu} from 'antd'
 
-const {Header, Content, Footer, Sider} = Layout
-
 const sidenavs = ['Dashboard', 'Edit Profile']
 
 interface PropsChildren {
@@ -12,7 +10,7 @@ interface PropsChildren {
 
 function AppSidenav() {
   return (
-    <Sider theme='light' breakpoint='lg' collapsedWidth='0'>
+    <Layout.Sider theme='light' breakpoint='lg' collapsedWidth='0'>
       <div
         style={{
           height: '2rem',
@@ -27,13 +25,13 @@ function AppSidenav() {
           </Menu.Item>
         ))}
       </Menu>
-    </Sider>
+    </Layout.Sider>
   )
 }
 
 function AppHeader() {
   return (
-    <Header
+    <Layout.Header
       style={{
         padding: 0,
       }}
@@ -43,36 +41,23 @@ function AppHeader() {
 
 function AppMain(props: PropsChildren) {
   return (
-    <Content
+    <Layout.Content
       style={{
         margin: '1rem',
       }}
     >
       {props.children}
-    </Content>
-  )
-}
-
-function AppFooter() {
-  return (
-    <Footer
-      style={{
-        textAlign: 'center',
-      }}
-    >
-      Ant Design ©2018 Created by Ant UED
-    </Footer>
+    </Layout.Content>
   )
 }
 
 export default function AppLayout(props: PropsChildren) {
   return (
-    <Layout>
+    <Layout style={{height: '100vh'}}>
       <AppSidenav />
       <Layout>
         <AppHeader />
         <AppMain>{props.children}</AppMain>
-        <AppFooter />
       </Layout>
     </Layout>
   )
